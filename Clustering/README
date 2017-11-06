@@ -1,1 +1,59 @@
 
+1. k-Means Clustering Normal Implementation:
+
+K-Means.py is a python file that can be run in Jupyter notebook or Anaconda - Spyder environment as all the dependent libraries will be pre-installed in the IDE.
+- At line 7, specify the path of the dataset for which the algorithm is to be run.
+- Specify maximum iterations in the field MA_ITERATIONS to be 10 at line 26 in the file.
+- Specify the index of the centroid values at line 57 as follows:
+	cnt = [x[4],x[25],x[31],x[99],x[131]]
+	where 5,26,32,100,132 are the centroids. Note that index starts from 0 in a numpy array or list in Python, hence the centroid indexes are decreased by 1 while initializing.
+- Run the program and resulting Jaccard and Rand coefficients are displayed along with the plot of clustering results visualization.
+
+2. Hierarchical Agglomerative Single Link (Min) Clustering:
+
+HAC.py is the corresponding program for Hierarchical Agglomerative Single Link Clustering, it can be run either in Jupyter notebook or in Python environment.
+- At line 9, specify the path of the dataset for which the algorithm is to be run.
+- Specify the number of clusters, that is, the level where the dendrogram needs to be cut at line 18. Assign the number of clusters to variable "nc".
+- Run the program and resulting Jaccard and Rand coefficients are displayed along with the plot of clustering results visualization.
+
+3. DBSCAN Clustering Implementation:
+
+dbscan.py is the corresponding program for Hierarchical Agglomerative Single Link Clustering, it can be run either in Jupyter notebook or in Python environment.
+- At line 9, specify the path of the dataset for which the algorithm is to be run.
+- At line 82, pass the eps and minpts values as parameters to function DBSCAN as follows:
+	DBSCAN(x,3.5,4)
+	x is the feature matrix
+	eps = 3.5
+	minpts = 4
+- Run the program and resulting Jaccard and Rand coefficients are displayed along with the plot of clustering results visualization.
+
+4. k-Means MapReduce Program:
+
+The java file KMeansCluster.java takes in the following parameters in the given order:
+
+1. input filepath - For eg: "~/inputdm/txt_files"
+2. output filepath  - For eg: "~/outputdm"
+3. local filepath  - For eg: "~/txt_files/iyer.txt"
+4. k value (number of clusters) - For eg: 5
+5. list of initial centroid gene Ids within "" - For eg: "6,16,26,33,106"  otherwise it can be "" ( to allow the code to select k number of equally spaced initial centroid points)
+
+Thus  the commands to run the Map-Reduce on a file will be in the following order :
+1. hdfs dfs -put ~/txt_files/ ~/inputdm 
+The above command uploads a local folder named "txt_files" containing the cho.txt/ iyer.txt/ new_dataset_1.txt to hdfs environment 
+
+2. hadoop com.sun.tools.javac.Main KMeansCluster.java
+The above command compiles the java code and generates three files as follows:
+i. KMeansCluster.class
+2. KMeansCluster$TokenizerMapper.class
+3. KMeansCluster$IntSumReducer.class
+
+3. jar cf km.jar KMeansCluster*.class
+The above commands compiles & assimilates all the .class files and warps it into a jar file named km.jar
+
+4. hadoop jar km.jar KMeansCluster ~/inputdm/txt_files ~/outputdm ~/txt_files/iyer.txt 5 "5,10,15,77,100"
+The final command to run the Map reduce code with the above mentioned parameters.
+
+
+N.B. The java file is kept in /home/hadoop folder - the same folder where hadoop is installed.
+
+
